@@ -1,56 +1,50 @@
-#include <iostream>
 #include "Inventory.h"
-#include "ElectronicItem.h"
 #include "ClothingItem.h"
-
-using namespace std;
+#include "ElectronicItem.h"
+#include <iostream>
 
 int main() {
     Inventory inventory;
-    int choice;
+    inventory.loadFromFile("inventory.txt");
 
+    int choice;
     do {
-        cout << "\n===== Inventory Management =====\n";
-        cout << "1. Add Electronic\n2. Add Clothing\n3. Display All\n4. Search\n5. Delete\n6. Sort Items By Id\n0. Exit\nChoice: ";
+        cout << "\n--- Inventory Management ---\n";
+        cout << "1. Add Clothing Item\n";
+        cout << "2. Add Electronic Item\n";
+        cout << "3. View All Items\n";
+        cout << "4. Delete Item by ID\n";
+        cout << "5. Save & Exit\n";
+        cout << "Enter choice: ";
         cin >> choice;
 
         if (choice == 1) {
-            int id, quantity, warranty;
-            double price;
-            string name;
-            cout << "Enter ID, Name, Quantity, Price, Warranty (months): ";
-            cin >> id >> name >> quantity >> price >> warranty;
-            inventory.addItem(new ElectronicItem(id, name, quantity, price, warranty));
+            int id, quantity;
+            string name, category, size, material;
+            float price;
+            cout << "Enter ID, Name, Category, Price, Quantity, Size, Material: ";
+            cin >> id >> name >> category >> price >> quantity >> size >> material;
+            inventory.addItem(new ClothingItem(id, name, category, price, quantity, size, material));
 
         } else if (choice == 2) {
-            int id, quantity;
-            double price;
-            string name, size, material;
-            cout << "Enter ID, Name, Quantity, Price, Size, Material: ";
-            cin >> id >> name >> quantity >> price >> size >> material;
-            inventory.addItem(new ClothingItem(id, name, quantity, price, size, material));
+            int id, quantity, warranty;
+            string name, category;
+            float price;
+            cout << "Enter ID, Name, Category, Price, Quantity, Warranty (months): ";
+            cin >> id >> name >> category >> price >> quantity >> warranty;
+            inventory.addItem(new ElectronicItem(id, name, category, price, quantity, warranty));
 
         } else if (choice == 3) {
             inventory.displayAll();
-
         } else if (choice == 4) {
-            int id;
-            cout << "Enter ID to search: ";
-            cin >> id;
-            Item* item = inventory.findItem(id);
-            if (item) item->display();
-            else cout << "Item not found.\n";
-
-        } else if (choice == 5) {
             int id;
             cout << "Enter ID to delete: ";
             cin >> id;
             inventory.deleteItem(id);
-        } else if (choice == 6) {
-            inventory.sortById();
         }
+    } while (choice != 5);
 
-    } while (choice != 0);
-
+    inventory.saveToFile("inventory.txt");
+    cout << "Inventory saved. Exiting...\n";
     return 0;
 }

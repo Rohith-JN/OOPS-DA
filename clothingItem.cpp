@@ -1,14 +1,17 @@
 #include "ClothingItem.h"
 #include <iostream>
 
-using namespace std;
-
-ClothingItem::ClothingItem(int id, const string& name, int quantity, double price,
-                           const string& size, const string& material)
-    : Item(id, name, quantity, price), size(size), material(material) {}
+ClothingItem::ClothingItem(int id, string name, string category, float price, int quantity,
+                           string size, string material)
+    : Item(id, name, category, price, quantity), size(size), material(material) {}
 
 void ClothingItem::display() const {
-    cout << "[CLOTHING] ID: " << id << ", Name: " << name
-              << ", Qty: " << quantity << ", Price: $" << price
-              << ", Size: " << size << ", Material: " << material << "\n";
+    Item::display();
+    cout << "    " << "Size: " << size << endl;
+    cout << "    " << "Material: " << material << endl;
+}
+
+string ClothingItem::toCSV() const {
+    return "Clothing," + to_string(id) + "," + name + "," + category + "," +
+           to_string(price) + "," + to_string(quantity) + "," + size + "," + material;
 }

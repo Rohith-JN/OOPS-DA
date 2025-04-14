@@ -3,14 +3,14 @@
 
 #include "Item.h"
 
-using namespace std;
-
 class ElectronicItem : public Item {
     int warrantyMonths;
 
 public:
-    ElectronicItem(int id, const string& name, int quantity, double price, int warrantyMonths);
+    ElectronicItem(int id, string name, string category, float price, int quantity,
+                   int warrantyMonths);
     void display() const override;
+    string toCSV() const override;
 };
 
 #endif

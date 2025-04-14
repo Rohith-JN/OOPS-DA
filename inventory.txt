@@ -1,0 +1,1 @@
+Electronic,2,Laptop,Electronic,1000.000000,1,5

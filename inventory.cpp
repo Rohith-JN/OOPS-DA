@@ -1,30 +1,17 @@
 #include "Inventory.h"
-#include "utils.h"
 #include <iostream>
-#include <algorithm>
+#include <fstream>
 
-using namespace std;
-
-// Destructor: deletes all items to free memory
-Inventory::~Inventory() {
-    for (int i = 0; i < items.size(); i++) {
-        delete items[i];
-    }
-}
-
-// Add a new item to the inventory
 void Inventory::addItem(Item* item) {
     items.push_back(item);
 }
 
-// Show details of all items
 void Inventory::displayAll() const {
     for (int i = 0; i < items.size(); i++) {
         items[i]->display();
     }
 }
 
-// Delete an item based on its ID
 void Inventory::deleteItem(int id) {
     for (int i = 0; i < items.size(); i++) {
         if (items[i]->getId() == id) {
@@ -37,21 +24,20 @@ void Inventory::deleteItem(int id) {
     cout << "Item not found.\n";
 }
 
-// Find and return pointer to an item by ID
-Item* Inventory::findItem(int id) const {
-    for (int i = 0; i < items.size(); i++) {
-        if (items[i]->getId() == id) {
-            return items[i];
-        }
+void Inventory::saveToFile(const string& filename) const {
+    ofstream file(filename);
+    for (size_t i = 0; i < items.size(); ++i) {
+        file << items[i]->toCSV() << endl;
     }
-    return nullptr;
 }
 
-void Inventory::sortById() {
-    if (items.size() <= 1) {
-        cout << "Not enough items to sort.\n";
-        return;
+void Inventory::loadFromFile(const string& filename) {
+    ifstream file(filename);
+    string line;
+    while (getline(file, line)) {
+        Item* item = Item::fromCSV(line);
+        if (item) {
+            items.push_back(item);
+        }
     }
-    quickSort(items, 0, items.size() - 1);
-    cout << "Items sorted by ID using QuickSort.\n";
 }

@@ -2,29 +2,25 @@
 #define ITEM_H
 
 #include <string>
-
+#include <memory>
 using namespace std;
 
 class Item {
 protected:
     int id;
-    string name;
+    string name, category;
+    float price;
     int quantity;
-    double price;
 
 public:
-    Item(int id, const string& name, int quantity, double price);
-    virtual ~Item();
+    Item(int id, string name, string category, float price, int quantity);
+    virtual ~Item() {}
 
     int getId() const;
-    string getName() const;
-    int getQuantity() const;
-    double getPrice() const;
+    virtual void display() const;
+    virtual string toCSV() const = 0;
 
-    void setQuantity(int);
-    void setPrice(double);
-
-    virtual void display() const = 0;
+    static Item* fromCSV(const std::string& line);
 };
 
 #endif

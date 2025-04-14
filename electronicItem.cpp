@@ -1,14 +1,16 @@
 #include "ElectronicItem.h"
 #include <iostream>
 
-using namespace std;
-
-ElectronicItem::ElectronicItem(int id, const string& name, int quantity, double price, int warrantyMonths)
-    : Item(id, name, quantity, price), warrantyMonths(warrantyMonths) {}
+ElectronicItem::ElectronicItem(int id, string name, string category, float price, int quantity,
+                               int warrantyMonths)
+    : Item(id, name, category, price, quantity), warrantyMonths(warrantyMonths) {}
 
 void ElectronicItem::display() const {
-    cout << "[ELECTRONIC] ID: " << id << ", Name: " << name
-              << ", Qty: " << quantity << ", Price: $" << price
-              << ", Warranty: " << warrantyMonths << " months\n";
+    Item::display();
+    cout << "    " << "Warranty: " << warrantyMonths << endl;
 }
 
+string ElectronicItem::toCSV() const {
+    return "Electronic," + to_string(id) + "," + name + "," + category + "," +
+           to_string(price) + "," + to_string(quantity) + "," + to_string(warrantyMonths);
+}
