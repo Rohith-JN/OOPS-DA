@@ -3,14 +3,14 @@
 
 #include "Item.h"
 
-class ElectronicItem : public Item {
-    int warrantyMonths;
+class ElectronicItem : public Item { // inherits publicly from Item class
+    int warrantyMonths; // unique property specific to ElectronicItem
 
 public:
     ElectronicItem(int id, string name, string category, float price, int quantity,
-                   int warrantyMonths);
-    void display() const override;
-    string toCSV() const override;
+                   int warrantyMonths); // Constructor to initialize set Item fields and then sets ElectronicItem fields
+    void display() const override; // Overrides the pure virtual display() function from the Item base class.
+    string toCSV() const override; // Overrides the pure virtual toCSV() method in Item.
 };
 
 #endif

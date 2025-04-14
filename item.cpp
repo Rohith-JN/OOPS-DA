@@ -19,11 +19,11 @@ void Item::display() const {
     cout << "    " << "Quantity: " << quantity << endl;
 }
 
-Item* Item::fromCSV(const string& line) {
+Item* Item::fromCSV(const string& line) { // static function 
     stringstream ss(line);
     string type, temp;
 
-    getline(ss, type, ',');
+    getline(ss, type, ','); // reads the first word to decide the type of item to construct
     if (type == "Clothing") {
         int id, quantity;
         string name, category, size, material;
@@ -37,7 +37,8 @@ Item* Item::fromCSV(const string& line) {
         getline(ss, size, ',');
         getline(ss, material);
 
-        return new ClothingItem(id, name, category, price, quantity, size, material);
+        return new ClothingItem(id, name, category, price, quantity, size, material); 
+        // dynamically allocates a new ClothingItem
     } else if (type == "Electronic") {
         int id, quantity, warranty;
         string name, category;
@@ -49,8 +50,9 @@ Item* Item::fromCSV(const string& line) {
         getline(ss, temp, ','); price = stof(temp);
         getline(ss, temp, ','); quantity = stoi(temp);
         getline(ss, temp); warranty = stoi(temp);
-
+        
+        // Dynamically allocates a new ElectronicItem
         return new ElectronicItem(id, name, category, price, quantity, warranty);
     }
-    return nullptr;
+    return nullptr; // else return nulll pointer
 }
